@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.syn.mybatis.mapper.PeopleMapper" >
+    <resultMap id="peopleMap" type="People" >
+        <id column="id" property="id" javaType="int"/>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="qq" property="qq" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="entro_time" property="entro_time" jdbcType="BIGINT" />
+        <result column="school" property="school" jdbcType="VARCHAR" />
+        <result column="number" property="number" javaType="int" />
+        <result column="diary_link" property="diary_link" javaType="java.lang.String"  />
+        <result column="slogan" property="slogan" jdbcType="VARCHAR" />
+        <result column="brother" property="brother" jdbcType="VARCHAR" />
+        <result column="create_at" property="create_at" javaType="java.lang.Long" />
+        <result column="update_at" property="update_at" javaType="java.lang.Long" />
+    </resultMap>
+    <!--添加单条数据，ID属性被封装到了people对象中-->
+    <insert id="add"  parameterType="cn.syn.mybatis.Pojo.People">
+          <selectKey keyProperty="id" order="AFTER" resultType="int">
+              select LAST_INSERT_ID()
+          </selectKey>
+        insert into people(name,qq,type,entro_time,school,number,diary_link,slogan,brother,create_at,update_at) VALUES
+        (#{name},#{qq},#{type},#{entro_time},#{school},#{number},#{diary_link},#{slogan},#{brother},#{create_at},#{update_at});
+    </insert>
+    <!--批量添加数据-->
+    <insert id="batchAdd">
+       insert into people(name,qq,type,entro_time,school,number,diary_link,slogan,brother,create_at,update_at) VALUES
+      <foreach collection="list" item="people" separator="," >
+          (#{people.name},#{people.qq},#{people.type},#{people.entro_time},#{people.school},#{people.number},#{people.diary_link},#{people.slogan},#{people.brother},#{people.create_at},#{people.update_at})
+      </foreach>
+    </insert>
+    <!--更新单条数据-->
+    <update id="update" parameterType="cn.syn.mybatis.Pojo.People" >
+       UPDATE people
+        <set>
+            <if test="people.name!=null">name=#{people.name},</if>
+            <if test="people.qq!=null">qq=#{people.qq},</if>
+            <if test="people.type!=null">type=#{people.type},</if>
+            <if test="people.entro_time!=null">entro_time=#{people.entro_time},</if>
+            <if test="people.school!=null">school=#{people.school},</if>
+            <if test="people.number!=null">number=#{people.number},</if>
+            <if test="people.diary_link!=null">diary_link=#{people.diary_link},</if>
+            <if test="people.slogan!=null">slogan=#{people.slogan},</if>
+            <if test="people.brother!=null">brother=#{people.brother},</if>
+            <if test="people.create_at!=null">create_at=#{people.create_at},</if>
+            <if test="people.update_at!=null">update_at=#{people.update_at},</if>
+        </set>
+        <!--<
+        //使用set或trim标签都是可以的>-->
+        <!--<trim prefix="set" suffixOverrides=",">-->
+            <!--<if test="people.name!=null">name=#{people.name},</if>-->
+            <!--<if test="people.qq!=null">qq=#{people.qq},</if>-->
+            <!--<if test="people.type!=null">type=#{people.type},</if>-->
+            <!--<if test="people.entro_time!=null">entro_time=#{people.entro_time},</if>-->
+            <!--<if test="people.school!=null">school=#{people.school},</if>-->
+            <!--<if test="people.number!=null">number=#{people.number},</if>-->
+            <!--<if test="people.diary_link!=null">diary_link=#{people.diary_link},</if>-->
+            <!--<if test="people.slogan!=null">slogan=#{people.slogan},</if>-->
+            <!--<if test="people.brother!=null">brother=#{people.brother},</if>-->
+            <!--<if test="people.create_at!=null">create_at=#{people.create_at},</if>-->
+            <!--<if test="people.update_at!=null">update_at=#{people.update_at},</if>-->
+        <!--</trim>-->
+        <where>
+                id=#{people.id}
+        </where>
+    </update>
+
+    <!--批量更新数据方法-->
+    <update id="batchUpdate" parameterType="list">
+        UPDATE people2
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="name=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.name!=null">
+                        WHEN id=#{item.id} then #{item.name}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="qq=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.qq!=null">
+                        WHEN id=#{item.id} then #{item.qq}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="type=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.type!=null">
+                        WHEN id=#{item.id} then #{item.type}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="entro_time=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.entro_time!=null">
+                        WHEN id=#{item.id} then #{item.entro_time}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="school=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.school!=null">
+                        WHEN id=#{item.id} then #{item.school}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="number=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.number!=null">
+                        WHEN id=#{item.id} then #{item.number}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="diary_link=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.diary_link!=null">
+                        WHEN id=#{item.id} then #{item.diary_link}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="slogan=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.slogan!=null">
+                        WHEN id=#{item.id} then #{item.slogan}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="brother=case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.brother!=null">
+                        WHEN id=#{item.id} then #{item.brother}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        WHERE
+        <foreach collection="list" separator="or" item="item" index="index">
+            id=#{item.id}
+        </foreach>
+    </update>
+    <!--删除单条数据（根据ID删除）-->
+    <delete id="delete" parameterType="int">
+      DELETE from people
+      <where>
+          <if test="id>0">
+              id=#{id}
+          </if>
+      </where>
+    </delete>
+    <!--批量删除数据-->
+    <delete id="batchDelete" parameterType="int[]">
+        DELETE from people2 WHERE id IN
+        <foreach collection="array" item="arr" index="no" open="(" separator="," close=")">
+            #{arr}
+        </foreach>
+    </delete>
+    <!--根据ID查找数据-->
+    <select id="findById" resultMap="peopleMap" parameterType="int" >
+        select * from people
+        <where>
+            <if test="id !=null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+    <!--根据name查找数据，可返回含有多个数据的结果集-->
+    <select id="findByName" resultType="cn.syn.mybatis.Pojo.People" parameterType="String">
+        select * from people
+        <where>
+            <if test="name !=null">
+               name=#{name}
+            </if>
+        </where>
+    </select>
+    <!--根据学号查找数据-->
+    <select id="findByNumber" resultType="cn.syn.mybatis.Pojo.People" parameterType="int">
+         select * from people
+        <where>
+            <if test="number !=null">
+                number=#{number}
+            </if>
+        </where>
+    </select>
+</mapper>
