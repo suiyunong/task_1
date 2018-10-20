@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="s3project:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="s3.war">
+      <element id="artifact" artifact-name="s3project:war exploded" />
+    </root>
+  </artifact>
+</component>
