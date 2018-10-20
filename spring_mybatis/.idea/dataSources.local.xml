@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="jdbc:mysql://localhost:3306/registration table" uuid="b2c4e1e7-758d-4197-b846-ed7ae3a6d9fb">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+      <ssh-properties>
+        <enabled>true</enabled>
+        <proxy-host>39.106.157.24</proxy-host>
+        <proxy-port>22</proxy-port>
+        <user>root</user>
+        <use-password>true</use-password>
+        <auth-type>PASSWORD</auth-type>
+      </ssh-properties>
+    </data-source>
+  </component>
+</project>
